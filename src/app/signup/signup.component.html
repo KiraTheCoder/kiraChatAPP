@@ -1,57 +1,70 @@
 <body>
-    <div class="container">
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit(name.value,phone.value,input1.value+input2.value+input3.value+input4.value)">
-        <div class="heading-flex-box">
-          <p>Signup</p>
+  <div class="container">
+    <form
+      [formGroup]="signupForm"
+      (ngSubmit)="onSubmit(name.value, phone.value)"
+    >
+      <div class="heading-flex-box">
+        <p>Signup</p>
+      </div>
+
+      <div class="flex-box">
+        <label for="full-name">Full Name</label>
+        <input
+          #name
+          type="text"
+          id="full-name"
+          formControlName="fullName"
+          class="input-box"
+          placeholder="Enter your name"
+        />
+
+        <label for="phone-number">Phone Number</label>
+        <input
+          #phone
+          type="text"
+          id="phone-number"
+          maxlength="10"
+          formControlName="phoneNumber"
+          class="input-box"
+          placeholder="Enter your mobile number"
+        />
+      </div>
+
+      <div class="otp-btn-div">
+        <button
+          [disabled]="!isEnabled"
+          (click)="onClick()"
+          [ngClass]="{ 'is-active': isEnabled, clicked: buttonClicked }"
+          type="button"
+          class="otp-btn"
+        >
+          Send OTP
+        </button>
+      </div>
+
+      <div class="hidden-container" [ngClass]="{ display: displayButton }">
+        <div class="otp-boxes">
+          <ng-otp-input
+            class="otp-input-boxes"
+            [config]="{
+              length: 4,
+              allowNumbersOnly: true,
+              inputStyles: {
+                'background-color': 'transparent',
+                'border': '1px solid #ccc',
+                'color': 'white',
+                'font-size': '16px',
+                'text-align': 'center',  
+              }
+            }"
+            (onInputChange)="onOtpChange($event)"
+          ></ng-otp-input>
         </div>
-  
-        <div class="flex-box">
-          <label for="full-name">Full Name</label>
-          <input #name
-            type="text"
-            id="full-name"
-            formControlName="fullName"
-            class="input-box"
-            placeholder="Enter your name"
-          />
-  
-          <label for="phone-number">Phone Number</label>
-          <input #phone
-            type="text"
-            id="phone-number"
-            maxlength="10"
-            formControlName="phoneNumber"
-            class="input-box"
-            placeholder="Enter your mobile number"
-          />
+        <div class="button">
+          <button type="submit" class="btn2">Continue</button>
         </div>
-  
-        <div class="otp-btn-div">
-          <button
-            [disabled]="!isEnabled"
-            (click)="onClick()"
-            [ngClass]="{ 'is-active': isEnabled ,'clicked': buttonClicked }"
-            type="button"
-            class="otp-btn"
-          >
-            Send OTP
-          </button>
-        </div>
-  
-        <div class="hidden-container" [ngClass]="{ display: displayButton }">
-          <div class="otp-boxes">
-            <input #input1 type="text" class="otp-input" id="otp1" maxlength="1" />
-            <input #input2 type="text" class="otp-input" id="otp2" maxlength="1" />
-            <input #input3 type="text" class="otp-input" id="otp3" maxlength="1" />
-            <input #input4 type="text" class="otp-input" id="otp4" maxlength="1" />
-          </div>
-          <div class="button">
-            <button type="submit" class="btn2">
-              Continue
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </body>
-  
+      </div>
+    </form>
+  </div>
+</body>

@@ -151,3 +151,10 @@ input {
 .clicked{
     background-color: red;
 }
+
+
+.otp-input-boxes input {
+  background-color: transparent !important;
+  border: 1px solid #ccc !important;
+  color: #000 !important;
+}
