@@ -1,0 +1,74 @@
+
+.main{
+   
+    height: 100vh;
+    width: 70%;
+    /* background-color: lightblue; */
+    background-image: url('../assets/whatsapp_background.jpg');
+    background-repeat: nene;
+}
+
+.navbar{
+    height:60px;
+    width: 100%; 
+    background-color: black;
+    display: flex;
+    align-items: center;
+}
+
+.mat-icons{
+   margin-left: auto;
+   margin-right: 20px;
+}
+
+.phone{
+    margin-right: 40px;
+}
+
+.video{
+    margin-right: 40px;
+}
+
+.message-box{
+    display: flex;
+     margin-top: auto;
+     gap: 5px;
+    position: fixed;
+    bottom: 0;
+    }
+
+.message-input{
+ height: 40px;
+ /* width: 90vw; */
+border-radius: 5rem;
+border: none;
+background-color: #0F1A1B;
+color: white;
+margin-left: 20px;
+}
+
+.message-input:focus{
+    outline: none;
+}
+
+.voice-message{
+    background-color: #312F2F;
+    height: 45px;
+    width: 45px;
+    border-radius: 5rem;
+    text-align: center;
+
+}
+
+mat-icon{
+    fill: none;
+    color: white;
+}
+
+.voice-message{
+    font-size: 55px;
+}
+
+.message-box > input{
+    width: 60vw;
+}

@@ -1,0 +1,24 @@
+
+    <div class="main">
+         
+        <nav class="navbar">
+           <div class="mat-icons">
+            <mat-icon class="phone">phone_in_talk</mat-icon>
+            <mat-icon class="video">voice_chat</mat-icon>
+           </div>
+        </nav>
+ 
+        <div class="show-message" *ngFor="let msg of messages">
+            <p>{{msg}}</p>
+        </div>
+
+       <div class="message-box">
+        <input class="message-input" [(ngModel)]="message" placeholder="Type a message" type="text">
+        <div class="voice-message">
+            <mat-icon (click)="sendMessage()">send</mat-icon>
+        </div>
+       </div>
+    </div>
+
+
+    

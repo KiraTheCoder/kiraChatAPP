@@ -43,7 +43,7 @@
         </button>
       </div>
 
-      <div class="hidden-container" [ngClass]="{ display: displayButton }">
+      <div class="hidden-container" [ngClass]="{ display: container }">
         <div class="otp-boxes">
           <ng-otp-input
             class="otp-input-boxes"
@@ -56,6 +56,7 @@
                 'color': 'white',
                 'font-size': '16px',
                 'text-align': 'center',  
+                'focus':'outline:none'
               }
             }"
             (onInputChange)="onOtpChange($event)"
@@ -68,3 +69,5 @@
     </form>
   </div>
 </body>
+
+<router-outlet></router-outlet>

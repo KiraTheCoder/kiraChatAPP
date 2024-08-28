@@ -10,22 +10,27 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from '../service/userService/user.service';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgOtpInputModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgOtpInputModule,RouterOutlet],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
   signupForm: FormGroup;
-  displayButton: boolean = false;
+  container: boolean = true;
 
   buttonClicked: boolean = false;
-  otp:string=''
+  otp: string = '';
 
-  constructor(private fb: FormBuilder, private service: UserService) {
+  constructor(
+    private fb: FormBuilder,
+    private service: UserService,
+    private router: Router
+  ) {
     this.signupForm = this.fb.group({
       fullName: [''],
       phoneNumber: [
@@ -49,7 +54,7 @@ export class SignupComponent {
   }
 
   onClick() {
-    this.displayButton = false;
+   
     this.buttonClicked = true;
 
     this.service.sendOtp(this.phoneNumber).subscribe({
@@ -57,27 +62,36 @@ export class SignupComponent {
         console.log(res);
         let otpID = res.data.otpID;
         this.service.setId(otpID);
-        console.log(otpID);
+        if(res.success===true)
+          this.container=false;
+        
       },
       error: (res: any) => {
         console.log(res);
       },
+     
     });
   }
 
   onSubmit(name: string, phoneNumber: string) {
-
     this.service.addUser(name, phoneNumber, this.otp).subscribe({
       next: (res: any) => {
         console.log(res);
+       if(res.success===true){
+        this.router.navigate(['/chat'])
+       }
+       let token = res.data.token;
+       localStorage.setItem('token',JSON.stringify(token));
       },
       error: (res: any) => {
         console.log(res);
+        alert('Something went wrong')
       },
     });
+    
   }
 
   onOtpChange(value: string) {
-    this.otp = value;  
+    this.otp = value;
   }
 }
