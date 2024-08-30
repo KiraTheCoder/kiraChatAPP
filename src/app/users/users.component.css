@@ -1,0 +1,140 @@
+.container {
+  display: flex;
+  height: 100vh;
+  max-width: 300px;
+  flex-direction: column;
+  background-color: #1f1d1d;
+}
+
+.search {
+  width: 220px;
+  margin: 20px;
+  padding: 0;
+}
+
+.search-bar {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10rem;
+  background-color: #543639;
+  color: white;
+}
+
+.search-bar input {
+  background-color: transparent;
+  border: none;
+  border-radius: 5rem;
+  color: white;
+  height: 35px;
+  width: 80%;
+  padding: 10px;
+}
+
+.search-bar mat-icon {
+  margin-right: 20px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.messages {
+  color: white;
+  margin-left: 20px;
+}
+
+.all-chats {
+  display: flex;
+  width: 230px;
+  margin: 0px 10px 10px 10px;
+  padding: 0;
+  height: 42px;
+  background-color: black;
+  border-radius: 20px;
+  align-items: center;
+  gap: 5px;
+}
+
+.user-chat {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  height: 65px;
+  background-color: #312f2f;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 8px;
+  gap: 30px;
+}
+
+.img-div {
+  height: 45px;
+  width: 45px;
+  border-radius: 5rem;
+  background-color: lightblue;
+  margin-left: 20px;
+}
+
+.content {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.content .status {
+  color: #767876;
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+
+h4 {
+  font-size: 30px;
+}
+
+
+
+button {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  font-size: 12px;
+  background-color: transparent;
+  border-radius: 10rem;
+  width: 65px;
+  height: 30px;
+  border: none;
+}
+
+
+
+.active-link {
+  border-radius: 10px;
+  background-color:  #322F2F;
+}
+
+.all-chats div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  font-size: 12px;
+  /* background-color: #322F2F; */
+  padding: 2px;
+  border-radius: 10rem;
+  width: 60px;
+  height: 30px;
+}
+
+.active-button {
+  font-weight: bold;
+  background-color: #322F2F;
+}

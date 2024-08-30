@@ -4,11 +4,13 @@ import { SocketService } from '../service/web-socket/socket.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { IconsComponent } from '../icons/icons.component';
+import { UsersComponent } from '../users/users.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [MatIconModule, FormsModule, CommonModule, RouterOutlet],
+  imports: [MatIconModule, FormsModule, CommonModule, RouterOutlet,IconsComponent,UsersComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })

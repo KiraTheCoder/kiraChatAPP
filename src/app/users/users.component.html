@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="search">
+    <div class="search-bar">
+      <input type="search" placeholder="serach..." />
+      <mat-icon>search</mat-icon>
+    </div>
+  </div>
+
+  <div class="messages">
+    <h4>Messages</h4>
+  </div>
+
+  <div class="all-chats">
+    <button
+      (click)="setActive('chats')"
+      [ngClass]="{ 'active-button': activeButton === 'chats' }"
+      class="btn">
+      All Chats
+    </button>
+
+    <button
+      (click)="setActive('groups')"
+      [ngClass]="{ 'active-button': activeButton === 'groups' }"
+      class="btn">
+      Groups
+    </button>
+
+    <button
+      (click)="setActive('contacts')"
+      [ngClass]="{ 'active-button': activeButton === 'contacts' }"
+      class="btn">
+      Contacts
+    </button>
+  </div>
+
+  <div class="user-chat">
+    <div class="img-div"></div>
+
+    <div class="content">
+      <p>user name</p>
+      <p class="status">user status</p>
+    </div>
+  </div>
+</div>
