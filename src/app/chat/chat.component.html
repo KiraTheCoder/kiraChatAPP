@@ -29,12 +29,12 @@
     </div>
 
     <!-- Section displaying the chat messages -->
-    <div class="show-message" *ngFor="let msg of messages">
-      <p>{{ msg }}</p>
+    
+  <div class="chat-container" *ngFor="let i of messages" >
+    <p class="msg">{{i}}</p>
     </div>
 
-    <!-- Message input section at the bottom with a send button -->
-
+    <!-- input-box -->
     <div class="message">
       <div class="message-box">
         <input

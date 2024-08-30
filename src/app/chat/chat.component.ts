@@ -15,7 +15,7 @@ import { UsersComponent } from '../users/users.component';
   styleUrl: './chat.component.css',
 })
 export class ChatComponent {
-  messages: string[] = [];
+  messages: string[] = ['first','second','first','second','first','second','first','second','first','second','first','second','first','second','first','second','first','second'];
   message: string = '';
 
   constructor(private socketService: SocketService) {}
