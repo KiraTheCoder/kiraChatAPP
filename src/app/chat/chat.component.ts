@@ -26,11 +26,7 @@ export class ChatComponent {
     // Listen for new messages
     this.socketService.on('receiveMessage').subscribe((message: string) => {
       this.messages.push(message);
-<<<<<<< HEAD
       console.log(message);
-=======
-      console.log(this.messages)
->>>>>>> 7c86f03a906edfad300a832206c964164f36e368
       console.log('socketService.on')
     });
   }
