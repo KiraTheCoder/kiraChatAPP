@@ -54,10 +54,11 @@ export class SocketService {
 
   // Emit an event to the server
   emit(eventName: string, data?: any): void {
-    this.userId != localStorage.getItem('userId');
+    this.userId = localStorage.getItem('userId') || '';
     console.log(this.userId);
+    const user_id= JSON.parse(this.userId)
     if (this.socket) {
-      this.socket.emit(eventName, { recipientId: JSON.parse(this.userId), message: data });
+      this.socket.emit(eventName, { recipientId: user_id, message: data });
     } else {
       console.error('Socket is not initialized');
     }
