@@ -7,6 +7,7 @@ import { RouterOutlet } from '@angular/router';
 import { IconsComponent } from '../icons/icons.component';
 import { UsersComponent } from '../users/users.component';
 import { Messages } from '../interfaces/users';
+import { UserService } from '../service/userService/user.service';
 
 @Component({
   selector: 'app-chat',
@@ -18,17 +19,33 @@ import { Messages } from '../interfaces/users';
 export class ChatComponent {
   messages:Messages[]=[];
   message: any = '';
+  constructor(private socketService: SocketService,private service:UserService) {}
+ 
+  visible:boolean=false;
 
-  constructor(private socketService: SocketService) {}
-
+  // user:any
+  
   ngOnInit(): void {
     // Listen for new messages
-     this.socketService.on('receiveMessage').subscribe((message: any) => {
-       console.log(message)
-       this.messages.push(message)
+    this.visible=this.service.getVisibility();
+    this.socketService.on('receiveMessage').subscribe((message: any) => {
+      console.log(message)
+      this.messages.push(message)
     });
-  }
 
+    // this.service.fetchUser().subscribe({
+    //   next:(res)=>{
+    //     console.log(res);
+    //     this.user=res.data.name;
+    //     console.log(this.user);
+    //   },
+    //   error:(res)=>{
+    //     console.log(res);
+    //   }
+    // })
+    
+  }
+  
   // Send a message
   sendMessage(): void {
     this.socketService.emit('sendMessage', this.message);
@@ -38,4 +55,9 @@ export class ChatComponent {
     console.log(this.message)
     this.message = '';
   }
+
+  onUserSelected(visible: boolean) {
+    this.visible = visible; // Set visibility to true when a user is selected
+  }
+
 }

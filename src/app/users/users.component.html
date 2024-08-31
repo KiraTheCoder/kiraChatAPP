@@ -33,14 +33,30 @@
     </button>
   </div>
 
-  <div class="user-chat" *ngFor="let user of users">
-    <div class="img-div"> </div>
-   <div  (click)="onClick(user._id)">
-    <div class="content">
-      <p>{{user.name}}</p>
-      <!-- <p class="status">user status</p> -->
-    </div>
+<div class="messages-container">
+  <div class="user-chat" *ngFor="let user of users"
+  (click)="onClick(user._id)" 
+  (click)="onUserClick()"
+  [ngClass]="{'active': isActive(user._id)}">
+   <div class="img-div">
+     <img 
+       *ngIf="user.image; else defaultImage" 
+       [src]="getImageSrc(user.image)" 
+       alt="User Image">
+     
+     <ng-template #defaultImage>
+       <!-- <p>😎</p> -->
+       <div [ngClass]="'default-image'"></div>
+     </ng-template>
    </div>
-
-  </div>
+   <div >
+     <div class="content">
+       <p>{{user.name}}</p>
+       <!-- <p>{{user.image.data}}</p> -->
+     </div>
+   </div>
+ </div>
+</div>
+  
+  
 </div>

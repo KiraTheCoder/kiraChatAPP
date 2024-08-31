@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -20,8 +20,11 @@ export class UsersComponent implements OnInit{
   activeButton: string = 'chats';
 
   users:User[]=[];
+  @Output() userSelected = new EventEmitter<boolean>();
 
-
+  getImageSrc(image: { contentType: string; data: string }): string {
+    return `data:${image.contentType};base64,${image.data}`;
+  }
 
   setActive(button: string) {
     this.activeButton = button;
@@ -44,11 +47,20 @@ export class UsersComponent implements OnInit{
   })
   }
 
-  setUsersList(){
-    this.service.setUser(this.users);
-  }
-
   onClick(userId:any){
     localStorage.setItem('userId',JSON.stringify(userId));
+    this.service.setVisibility(true);
+    this.activeUserId = userId;
   }
+
+  onUserClick() {
+    this.userSelected.emit(true); // Emit true to show the chat when a user is clicked
+  }
+
+  activeUserId: string | null = null; // To track the currently active user
+
+  isActive(userId: string): boolean {
+    return this.activeUserId === userId; // Check if the current user is active
+  }
+
 }

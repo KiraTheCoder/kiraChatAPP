@@ -22,10 +22,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 60px;
-  height: 60px;
+  height: 70px;
   background-color: #1f1d1d;
   width: 100%;
-  position: fixed;
+  /* position: fixed; */
 }
 
 .icon-div {
@@ -46,49 +46,42 @@
   background-color: lightgreen;
 }
 
-.message {
+.message{
   display: flex;
+  bottom: 0;
   height: 70px;
   width: 100%;
-  display: flex;
-  align-items: center;
-  bottom: 0;
-  position: fixed;
-  gap: 20px;
-}
-
-.message-box {
-  width: 72%;
-}
-
-input {
-  height: 15px;
-  width: 97%;
-  border-radius: 5rem;
-  border: none;
-  color: white;
-  background-color: #0f1a1b;
-  padding: 20px;
-  font-size: 18px;
-}
-
-input:focus {
-  outline: none;
-}
-
-.voice-message {
-  margin-left: 0px;
-  display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
-  width: 50px;
-  background-color: #312f2f;
-  border-radius: 5rem;
+  gap: 20px;
+}
+.message .message-box{
+  width: 90%;
 }
 
-.voice-message > mat-icon {
+input{
+  padding: 10px;
+  width: 100%;
+  height: 30px;
+  background-color:#1f1d1d;
   color: white;
+  border-radius: 10rem;
+}
+
+input:focus{
+  outline: none; 
+}
+
+.voice-message{
+  display: flex;
+  background-color: #312F2F;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  width: 45px;
+  border-radius: 10rem;
+  margin: 20px;
 }
 
 .user-chat {
@@ -137,4 +130,13 @@ p {
   word-wrap: break-word;
   height: 90%;
   color: white;
+}
+
+
+.chat-display-section{
+  height: 78%;
+  width: 100%;
+   margin: 10px 0 10px 0;
+  /* background-color: #21ff5f; */
+  overflow: auto;
 }
