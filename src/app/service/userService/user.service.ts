@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/user/';
+  private apiUrl = 'https://internally-massive-mosquito.ngrok-free.app/user/';
   constructor(private http: HttpClient) {}
 
   users_list:[]=[];
