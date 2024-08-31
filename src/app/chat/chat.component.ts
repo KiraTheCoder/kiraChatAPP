@@ -24,11 +24,11 @@ export class ChatComponent {
 
   ngOnInit(): void {
     // Listen for new messages
-    this.socketService.on('receiveMessage').subscribe((message: string) => {
-      this.messages.push(message);
-      console.log(message);
+    let newMessage = this.socketService.on('receiveMessage').subscribe((message: string) => {
       console.log('socketService.on')
     });
+
+    console.log(newMessage);
   }
 
   // Send a message

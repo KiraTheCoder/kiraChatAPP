@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class SocketService {
   private userId: string = '';
-  private apiUrl = 'http://localhost:8080'; // Your API URL
+  private apiUrl = 'https://internally-massive-mosquito.ngrok-free.app/'; // Your API URL
   private socket!: Socket;
   private token: string | null = localStorage.getItem('token');
 
@@ -55,7 +55,7 @@ export class SocketService {
   // Emit an event to the server
   emit(eventName: string, data?: any): void {
     this.userId = localStorage.getItem('userId') || '';
-    console.log(this.userId);
+    // console.log(this.userId);
     const user_id= JSON.parse(this.userId)
     if (this.socket) {
       this.socket.emit(eventName, { recipientId: user_id, message: data });
@@ -66,6 +66,7 @@ export class SocketService {
 
   // Listen for events from the server (generic method)
   on(eventName: string): Observable<any> {
+    console.log('on method starts')
     return new Observable((observer) => {
       if (this.socket) {
         this.socket.on(eventName, (data: any) => {
