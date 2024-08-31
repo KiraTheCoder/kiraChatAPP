@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SocketService {
-  private userId:string ='66cdaee136c06d02b736882f'
+  private userId: string = '';
   private apiUrl = 'http://localhost:8080'; // Your API URL
   private socket!: Socket;
   private token: string | null = localStorage.getItem('token');
@@ -54,10 +54,11 @@ export class SocketService {
 
   // Emit an event to the server
   emit(eventName: string, data?: any): void {
+    this.userId != localStorage.getItem('userId');
+    console.log(this.userId);
     if (this.socket) {
-      this.socket.emit(eventName,{recipientId:this.userId,message:data});
-    } 
-    else {
+      this.socket.emit(eventName, { recipientId: JSON.parse(this.userId), message: data });
+    } else {
       console.error('Socket is not initialized');
     }
   }

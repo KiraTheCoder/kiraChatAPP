@@ -15,7 +15,9 @@ import { UsersComponent } from '../users/users.component';
   styleUrl: './chat.component.css',
 })
 export class ChatComponent {
-  messages: string[] = ['first','second','first','second','first','second','first','second','first','second','first','second','first','second','first','second','first','second'];
+  messages: string[] = [
+    // 'first','second','first','second','first','second','first','second','first','second','first','second','first','second','first','second','first','second'
+  ];
   message: string = '';
 
   constructor(private socketService: SocketService) {}
@@ -24,6 +26,7 @@ export class ChatComponent {
     // Listen for new messages
     this.socketService.on('receiveMessage').subscribe((message: string) => {
       this.messages.push(message);
+      console.log(this.messages)
       console.log('socketService.on')
     });
   }
@@ -32,7 +35,7 @@ export class ChatComponent {
   sendMessage(): void {
     this.socketService.emit('sendMessage', this.message);
     console.log(this.message);
-    console.log(this.messages)
+    // console.log(this.messages)
     this.message = '';
   }
 }

@@ -33,12 +33,14 @@
     </button>
   </div>
 
-  <div class="user-chat">
-    <div class="img-div"></div>
-
+  <div class="user-chat" *ngFor="let user of users">
+    <div class="img-div"> </div>
+   <div  (click)="onClick(user._id)">
     <div class="content">
-      <p>user name</p>
-      <p class="status">user status</p>
+      <p>{{user.name}}</p>
+      <!-- <p class="status">user status</p> -->
     </div>
+   </div>
+
   </div>
 </div>
