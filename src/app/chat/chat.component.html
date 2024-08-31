@@ -30,8 +30,8 @@
 
     <!-- Section displaying the chat messages -->
     
-  <div class="chat-container" *ngFor="let i of messages" >
-    <p class="msg">{{i}}</p>
+  <div class="chat-container" *ngFor="let msg of messages" >
+    <p class="msg">{{msg.message}}</p>
     </div>
 
     <!-- input-box -->

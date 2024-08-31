@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { IconsComponent } from '../icons/icons.component';
 import { UsersComponent } from '../users/users.component';
+import { Messages } from '../interfaces/users';
 
 @Component({
   selector: 'app-chat',
@@ -15,27 +16,26 @@ import { UsersComponent } from '../users/users.component';
   styleUrl: './chat.component.css',
 })
 export class ChatComponent {
-  messages: string[] = [
-    // 'first','second','first','second','first','second','first','second','first','second','first','second','first','second','first','second','first','second'
-  ];
-  message: string = '';
+  messages:Messages[]=[];
+  message: any = '';
 
   constructor(private socketService: SocketService) {}
 
   ngOnInit(): void {
     // Listen for new messages
-    let newMessage = this.socketService.on('receiveMessage').subscribe((message: string) => {
-      console.log('socketService.on')
+     this.socketService.on('receiveMessage').subscribe((message: any) => {
+       console.log(message)
+       this.messages.push(message)
     });
-
-    console.log(newMessage);
   }
 
   // Send a message
   sendMessage(): void {
     this.socketService.emit('sendMessage', this.message);
-    console.log(this.message);
-    // console.log(this.messages)
+     let newMessage =this.message
+     let userId = localStorage.getItem('userId') || '';
+    this.messages.push({message:newMessage,userId:userId,createdAt:Date.now()})
+    console.log(this.message)
     this.message = '';
   }
 }
