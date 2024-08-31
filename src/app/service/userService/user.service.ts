@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://internally-massive-mosquito.ngrok-free.app/user/';
+  private apiUrl = 'https://kirachatapi-production.up.railway.app/user/';
   constructor(private http: HttpClient) {}
 
   users_list:[]=[];
@@ -58,6 +58,7 @@ export class UserService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${JSON.parse(token)}`,
     });
-    return this.http.get(this.apiUrl + 'all', { headers });
+    console.log(this.apiUrl+'all')
+    return this.http.get(this.apiUrl+'all', { headers });
   }
 }

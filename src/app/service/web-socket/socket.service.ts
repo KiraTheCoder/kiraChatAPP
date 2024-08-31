@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class SocketService {
   private userId: string = '';
-  private apiUrl = 'https://internally-massive-mosquito.ngrok-free.app/'; // Your API URL
+  private apiUrl = 'https://kirachatapi-production.up.railway.app/'
   private socket!: Socket;
   private token: string | null = localStorage.getItem('token');
 
