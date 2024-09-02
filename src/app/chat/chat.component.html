@@ -4,19 +4,27 @@
   </div>
 
   <div class="users-list">
-    <app-users></app-users>
+    <app-users (userSelected)="onUserSelected($event)"></app-users>
   </div>
 
-  <div class="main-div">
+
+  <div class="main-div" *ngIf="visible">
     <!-- Navbar section containing icons for phone and video -->
     <div class="navbar-div">
 
-      <div class="user-chat">
+      <div class="user-chat" *ngIf="userDetails">
     
-        <div class="img-div"></div>
+        <div class="img-div" > 
+          <img *ngIf="userDetails.image;else defaultImage"
+           [src]="imgSource(userDetails.image)" alt="">
 
-        <div class="content">
-            <p>user name</p>
+          <ng-template #defaultImage>
+            <div [ngClass]="'default-image'"></div>
+          </ng-template>
+        </div>
+
+        <div class="content" >
+            <p>{{userDetails.name}}</p>
             <p class="status">online</p>
         </div>
   
@@ -30,9 +38,11 @@
 
     <!-- Section displaying the chat messages -->
     
-  <div class="chat-container" *ngFor="let msg of messages" >
-    <p class="msg">{{msg.message}}</p>
-    </div>
+  <div class="chat-display-section">
+    <div class="chat-container" *ngFor="let msg of messages" >
+      <p class="msg">{{msg.message}}</p>
+      </div>
+  </div>
 
     <!-- input-box -->
     <div class="message">
@@ -50,4 +60,4 @@
       </div>
     </div>
   </div>
-</div>
+ </div>

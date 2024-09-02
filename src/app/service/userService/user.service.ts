@@ -1,15 +1,29 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserData } from '../../interfaces/userDataInterface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+
+visibility:boolean= false;
+
+setVisibility(visible:boolean){
+this.visibility=visible;
+}
+
+getVisibility(){
+  return this.visibility;
+}
+
   private apiUrl = 'https://kirachatapi-production.up.railway.app/user/';
   constructor(private http: HttpClient) {}
 
   users_list:[]=[];
+
+  userSelected = new EventEmitter<UserData>();
 
   setUser(users:any){
    this.users_list=users;
@@ -48,17 +62,33 @@ export class UserService {
     return this.http.get(this.apiUrl);
   }
 
-  getAllUser(): Observable<any> {
+  sendToken(){
     const token = localStorage.getItem('token');
-
-    if (!token) {
-      throw new Error('Authentication token not found in local storage.');
+    if(!token){
+      throw new Error('Token not found');
     }
-    // Make sure not to add extra quotes
+
     const headers = new HttpHeaders({
       Authorization: `Bearer ${JSON.parse(token)}`,
     });
-    console.log(this.apiUrl+'all')
+
+    return headers;
+  }
+
+  getAllUser(): Observable<any> {
+    let headers = this.sendToken();
     return this.http.get(this.apiUrl+'all', { headers });
   }
+
+  getImageSrc(image: { contentType: string; data: string }): string {
+    return `data:${image.contentType};base64,${image.data}`;
+  }
+
+  fetchUserChat(){
+    let headers = this.sendToken();
+    let otherUserId:any =localStorage.getItem('userId') ||undefined;
+    let params = new HttpParams().set('otherUserId',otherUserId);
+    return this.http.get(this.apiUrl+'chat/single',{headers,params})
+  }
+
 }
