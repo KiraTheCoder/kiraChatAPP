@@ -37,22 +37,21 @@
   <div class="user-chat" *ngFor="let user of users"
   (click)="onClick(user._id)" 
   (click)="onUserClick()"
+  (click)="selectUser(user.name,user.image)"
   [ngClass]="{'active': isActive(user._id)}">
    <div class="img-div">
      <img 
        *ngIf="user.image; else defaultImage" 
-       [src]="getImageSrc(user.image)" 
+       [src]="getSource(user.image)" 
        alt="User Image">
      
      <ng-template #defaultImage>
-       <!-- <p>😎</p> -->
        <div [ngClass]="'default-image'"></div>
      </ng-template>
    </div>
    <div >
      <div class="content">
        <p>{{user.name}}</p>
-       <!-- <p>{{user.image.data}}</p> -->
      </div>
    </div>
  </div>

@@ -1,6 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserData } from '../../interfaces/userDataInterface';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,8 @@ getVisibility(){
   constructor(private http: HttpClient) {}
 
   users_list:[]=[];
+
+  userSelected = new EventEmitter<UserData>();
 
   setUser(users:any){
    this.users_list=users;
@@ -77,9 +80,15 @@ getVisibility(){
     return this.http.get(this.apiUrl+'all', { headers });
   }
 
-  fetchUser():Observable<any>{
-    // alert('fetch user called')
-    let headers = this.sendToken();
-     return this.http.get(this.apiUrl+'details',{headers});
+  getImageSrc(image: { contentType: string; data: string }): string {
+    return `data:${image.contentType};base64,${image.data}`;
   }
+
+  fetchUserChat(){
+    let headers = this.sendToken();
+    let otherUserId:any =localStorage.getItem('userId') ||undefined;
+    let params = new HttpParams().set('otherUserId',otherUserId);
+    return this.http.get(this.apiUrl+'chat/single',{headers,params})
+  }
+
 }

@@ -8,6 +8,7 @@ import { IconsComponent } from '../icons/icons.component';
 import { UsersComponent } from '../users/users.component';
 import { Messages } from '../interfaces/users';
 import { UserService } from '../service/userService/user.service';
+import { UserData } from '../interfaces/userDataInterface';
 
 @Component({
   selector: 'app-chat',
@@ -16,9 +17,12 @@ import { UserService } from '../service/userService/user.service';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })
+
 export class ChatComponent {
+  userDetails :UserData | undefined;
   messages:Messages[]=[];
   message: any = '';
+
   constructor(private socketService: SocketService,private service:UserService) {}
  
   visible:boolean=false;
@@ -31,18 +35,15 @@ export class ChatComponent {
     this.socketService.on('receiveMessage').subscribe((message: any) => {
       console.log(message)
       this.messages.push(message)
+     
     });
 
-    // this.service.fetchUser().subscribe({
-    //   next:(res)=>{
-    //     console.log(res);
-    //     this.user=res.data.name;
-    //     console.log(this.user);
-    //   },
-    //   error:(res)=>{
-    //     console.log(res);
-    //   }
-    // })
+    this.service.userSelected.subscribe(data => {
+      this.userDetails = data;
+      console.log('Received User Data:', this.userDetails);
+    });
+
+    this.getUserChat()
     
   }
   
@@ -60,4 +61,109 @@ export class ChatComponent {
     this.visible = visible; // Set visibility to true when a user is selected
   }
 
+  imgSource(image: { contentType: string; data: string }): string {
+     let src = this.service.getImageSrc(image);
+     return src;
+  }
+
+  getUserChat(){
+    console.log('😎😎 method starts')
+    this.service.fetchUserChat().subscribe({
+      next:(res:any)=>{
+        console.log(res);
+      },
+      error:(res:any)=>{
+        console.log(res);
+      }
+    })
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

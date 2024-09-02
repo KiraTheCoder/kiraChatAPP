@@ -5,50 +5,62 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { UserService } from '../service/userService/user.service';
 import { User } from '../interfaces/users';
+import { UserData } from '../interfaces/userDataInterface';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [MatIconModule,RouterLinkActive,RouterLink,FormsModule,CommonModule],
+  imports: [
+    MatIconModule,
+    RouterLinkActive,
+    RouterLink,
+    FormsModule,
+    CommonModule,
+  ],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
+  styleUrl: './users.component.css',
 })
-export class UsersComponent implements OnInit{
- 
-  constructor(private service:UserService){}
+export class UsersComponent implements OnInit {
+  ngOnInit() {
+    this.getUsers();
+  }
+
+  constructor(private service: UserService) {}
 
   activeButton: string = 'chats';
 
-  users:User[]=[];
+  users: User[] = [];
   @Output() userSelected = new EventEmitter<boolean>();
 
-  getImageSrc(image: { contentType: string; data: string }): string {
-    return `data:${image.contentType};base64,${image.data}`;
+  selectUser(name:string,image:string) {
+    const userData: UserData = {
+        name,image
+    };
+    this.service.userSelected.emit(userData);
   }
+
+  userDetails = new EventEmitter<boolean>();
+
+ 
 
   setActive(button: string) {
     this.activeButton = button;
   }
 
-  ngOnInit(){
-   this.getUsers()
-  }
-  
-  getUsers(){
-  this.service.getAllUser().subscribe({
-    next:(res:any)=>{
-      console.log(res);
-      this.users = res.data.users
-      console.log(this.users);
-    },
-    error:(res:any)=>{
-      console.log(res)
-    }
-  })
+  getUsers() {
+    this.service.getAllUser().subscribe({
+      next: (res: any) => {
+        this.users = res.data.users;
+        console.log(this.users);
+      },
+      error: (res: any) => {
+        console.log(res);
+      },
+    });
   }
 
-  onClick(userId:any){
-    localStorage.setItem('userId',JSON.stringify(userId));
+  onClick(userId: any) {
+    localStorage.setItem('userId', JSON.stringify(userId));
     this.service.setVisibility(true);
     this.activeUserId = userId;
   }
@@ -63,4 +75,8 @@ export class UsersComponent implements OnInit{
     return this.activeUserId === userId; // Check if the current user is active
   }
 
+  getSource(image: { contentType: string; data: string }):string{
+   let img= this.service.getImageSrc(image);
+   return img;
+  }
 }

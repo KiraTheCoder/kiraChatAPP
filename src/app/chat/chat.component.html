@@ -12,15 +12,19 @@
     <!-- Navbar section containing icons for phone and video -->
     <div class="navbar-div">
 
-      <div class="user-chat">
+      <div class="user-chat" *ngIf="userDetails">
     
-        <div class="img-div"> 
-          <!-- <img src="../assets/profile_image.jpg" alt=""> -->
+        <div class="img-div" > 
+          <img *ngIf="userDetails.image;else defaultImage"
+           [src]="imgSource(userDetails.image)" alt="">
 
+          <ng-template #defaultImage>
+            <div [ngClass]="'default-image'"></div>
+          </ng-template>
         </div>
 
-        <div class="content">
-            <p>Rakesh sharma</p>
+        <div class="content" >
+            <p>{{userDetails.name}}</p>
             <p class="status">online</p>
         </div>
   

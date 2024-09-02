@@ -140,3 +140,12 @@ p {
   /* background-color: #21ff5f; */
   overflow: auto;
 }
+
+
+.default-image {
+  background-image: url('../assets/emoji.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100%; /* Adjust as needed */
+  width: 100%; /* Adjust as needed */
+}
