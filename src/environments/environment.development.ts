@@ -1,5 +1,5 @@
 export const environment = {
-//   development: true,f
+  development: true,
   url: 'https://kirachatapi-production.up.railway.app/',
-//   url:'https://localhost:8080'
+  // url:'http://localhost:8080/'
 };

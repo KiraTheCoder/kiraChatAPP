@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SocketService {
   private userId: string = '';
-  private apiUrl = 'https://kirachatapi-production.up.railway.app/'
+  // private apiUrl = 'https://kirachatapi-production.up.railway.app/'
+  private apiUrl = environment.url;
   private socket!: Socket;
   private token: string | null = localStorage.getItem('token');
 
