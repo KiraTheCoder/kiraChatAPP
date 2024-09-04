@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { UserData } from '../../interfaces/userDataInterface';
 
 @Injectable({
@@ -18,7 +19,8 @@ getVisibility(){
   return this.visibility;
 }
 
-  private apiUrl = 'https://kirachatapi-production.up.railway.app/user/';
+  private apiUrl = environment.url+'user/';
+  // private apiUrl = 'https://kirachatapi-production.up.railway.app/user/';
   constructor(private http: HttpClient) {}
 
   users_list:[]=[];
