@@ -1,13 +1,13 @@
 .container {
   display: flex;
   height: 100vh;
-  max-width: 300px;
+  max-width: 350px;
   flex-direction: column;
   background-color: #1f1d1d;
 }
 
 .search {
-  width: 220px;
+  width: 300px;
   margin: 20px;
   padding: 0;
 }
@@ -48,14 +48,22 @@ input:focus {
 
 .all-chats {
   display: flex;
-  width: 230px;
+  width: 300px;
   margin: 0px 10px 10px 10px;
   padding: 0;
-  height: 42px;
+  height: 60px;
   background-color: black;
   border-radius: 20px;
   align-items: center;
+  justify-content: center;
   gap: 5px;
+  margin-left: 20px;
+}
+
+.messages-container{
+
+ overflow: hidden;
+ overflow-y: scroll;
 }
 
 .user-chat {
@@ -68,6 +76,27 @@ input:focus {
   margin-right: 10px;
   border-radius: 8px;
   gap: 30px;
+  transition: box-shadow 0.3s ease; /* Smooth transition for box-shadow */
+}
+
+.user-chat:hover {
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Blue shadow on hover */
+}
+
+.user-chat.active {
+  background-color: #007bff; /* Change background color for active state */
+  color: white; /* Change text color for active state */
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Blue shadow on active */
+  border: 2px solid #007bff; /* Blue border on active */
+}
+
+
+.img-div {
+  height: 45px;
+  width: 45px;
+  border-radius: 5rem;
+  margin-left: 20px;
+  overflow: hidden;
 }
 
 .img-div {
@@ -76,6 +105,16 @@ input:focus {
   border-radius: 5rem;
   background-color: lightblue;
   margin-left: 20px;
+  overflow: hidden; /* Ensures any overflowed content is hidden */
+  display: flex;
+  align-items: center; /* Centers the image vertically */
+  justify-content: center; /* Centers the image horizontally */
+}
+
+.img-div img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Ensures the image covers the container */
 }
 
 .content {
@@ -137,4 +176,38 @@ button {
 .active-button {
   font-weight: bold;
   background-color: #322F2F;
+}
+
+.default-image {
+  background-image: url('../assets/emoji.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100%; /* Adjust as needed */
+  width: 100%; /* Adjust as needed */
+}
+
+
+:root {
+  --scrollbar-height: 10px;
+  --scrollbar-scale: 0.3; /* Adjust this to reduce height */
+}
+
+/* Target the horizontal scrollbar */
+::-webkit-scrollbar {
+  height: var(--scrollbar-height);
+  width: 3px;
+}
+
+/* Scale down the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 10px;
+  transform: scaleY(var(--scrollbar-scale)); /* Reduce the height */
+  transform-origin: center;
+}
+
+/* Optional: Style the scrollbar track */
+::-webkit-scrollbar-track {
+  /* background-color: #f1f1f1; */
+  border-radius: 10px;
 }
