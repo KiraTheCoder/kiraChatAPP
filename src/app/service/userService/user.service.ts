@@ -19,7 +19,7 @@ getVisibility(){
   return this.visibility;
 }
 
-  private apiUrl = 'http://localhost:8080/'+'user/';
+  private apiUrl = environment.url+'user/';
   // private apiUrl = 'https://kirachatapi-production.up.railway.app/user/';
   constructor(private http: HttpClient) {}
 
@@ -86,11 +86,22 @@ getVisibility(){
     return `data:${image.contentType};base64,${image.data}`;
   }
 
-  fetchUserChat(){
+  fetchUserChat() {
+    console.log('fetchUserChat method starts:');
+    
+    // Get the token and prepare the headers
     let headers = this.sendToken();
-    let otherUserId:any =localStorage.getItem('userId') ||undefined;
-    let params = new HttpParams().set('otherUserId',otherUserId);
-    return this.http.get(this.apiUrl+'chat/single',{headers,params})
+    console.log(headers);
+    
+    // Get the otherUserId from localStorage
+    let otherUserId: any = localStorage.getItem('userId') || undefined;
+    otherUserId = JSON.parse(otherUserId);
+    console.log('other user id', otherUserId);
+    
+    // Append the otherUserId as a query parameter in the URL
+    const urlWithParams = `http://localhost:8080/user/chat/single/data?otherUserId=66d2f0cd36c06d02b72dcb0e`;
+    
+    // Make the GET request with headers
+    return this.http.get(urlWithParams, { headers });
   }
-
 }

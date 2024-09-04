@@ -68,7 +68,7 @@ export class SocketService {
 
   // Listen for events from the server (generic method)
   on(eventName: string): Observable<any> {
-    console.log('on method starts')
+    // console.log('on method starts')
     return new Observable((observer) => {
       if (this.socket) {
         this.socket.on(eventName, (data: any) => {

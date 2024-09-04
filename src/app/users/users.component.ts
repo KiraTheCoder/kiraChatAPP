@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit {
     this.service.getAllUser().subscribe({
       next: (res: any) => {
         this.users = res.data.users;
-        console.log(this.users);
+        // console.log(this.users);
       },
       error: (res: any) => {
         console.log(res);

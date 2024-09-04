@@ -33,14 +33,14 @@ export class ChatComponent {
     // Listen for new messages
     this.visible=this.service.getVisibility();
     this.socketService.on('receiveMessage').subscribe((message: any) => {
-      console.log(message)
+      // console.log(message)
       this.messages.push(message)
      
     });
 
     this.service.userSelected.subscribe(data => {
       this.userDetails = data;
-      console.log('Received User Data:', this.userDetails);
+      // console.log('Received User Data:', this.userDetails);
     });
 
     this.getUserChat()
@@ -67,7 +67,7 @@ export class ChatComponent {
   }
 
   getUserChat(){
-    console.log('😎😎 method starts')
+    console.log('😎😎  fetch user Details method starts')
     this.service.fetchUserChat().subscribe({
       next:(res:any)=>{
         console.log(res);
