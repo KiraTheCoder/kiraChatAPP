@@ -28,20 +28,23 @@ export class UsersComponent implements OnInit {
   constructor(private service: UserService) {}
 
   activeButton: string = 'chats';
+  activeUserId: string | null = null;
+  userChat:any;
 
   users: User[] = [];
   @Output() userSelected = new EventEmitter<boolean>();
+  @Output() visibilityChanged = new EventEmitter<boolean>();
 
-  selectUser(name:string,image:string) {
+  selectUser(name: string, image: string) {
     const userData: UserData = {
-        name,image
+      name,
+      image,
     };
     this.service.userSelected.emit(userData);
+    this.visibilityChanged.emit(true);
   }
 
   userDetails = new EventEmitter<boolean>();
-
- 
 
   setActive(button: string) {
     this.activeButton = button;
@@ -61,22 +64,44 @@ export class UsersComponent implements OnInit {
 
   onClick(userId: any) {
     localStorage.setItem('userId', JSON.stringify(userId));
-    this.service.setVisibility(true);
+    this.service.setVisibility(true,true);
     this.activeUserId = userId;
+    this.visibilityChanged.emit(true);
   }
 
-  onUserClick() {
-    this.userSelected.emit(true); // Emit true to show the chat when a user is clicked
+  onUserClick(_id:any) {
+    this.userSelected.emit(true);
+    this.service.setUserData(_id) // Emit true to show the chat when a user is clicked
   }
 
-  activeUserId: string | null = null; // To track the currently active user
 
   isActive(userId: string): boolean {
     return this.activeUserId === userId; // Check if the current user is active
   }
 
-  getSource(image: { contentType: string; data: string }):string{
-   let img= this.service.getImageSrc(image);
-   return img;
+  getSource(image: { contentType: string; data: string }): string {
+    let img = this.service.getImageSrc(image);
+    return img;
+  }
+
+  getUserChat() {
+    console.log('😎😎  fetch user Details method starts');
+    this.service.fetchUserChat().subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.userChat = res.data.messages;
+        this.service.setMessages(res.data.messages);
+        console.log('user chat',this.userChat);
+      },
+      error: (res: any) => {
+        console.log(res);
+        this.userChat = '';
+        this.service.setMessages(this.userChat);
+      },
+    });
+  }
+
+  selectUserId(user:boolean) {
+    this.service.setSelectedUser(user); // Update user in the service
   }
 }

@@ -36,7 +36,7 @@
 <div class="messages-container">
   <div class="user-chat" *ngFor="let user of users"
   (click)="onClick(user._id)" 
-  (click)="onUserClick()"
+  (click)="onUserClick(user._id)"
   (click)="selectUser(user.name,user.image)"
   [ngClass]="{'active': isActive(user._id)}">
    <div class="img-div">

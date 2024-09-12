@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { UserData } from '../../interfaces/userDataInterface';
 
@@ -8,30 +8,53 @@ import { UserData } from '../../interfaces/userDataInterface';
   providedIn: 'root',
 })
 export class UserService {
+  visibility: boolean = false;
+  hasCalledApi:boolean = false;
+  // messages:any=[];
 
-visibility:boolean= false;
+  private selectedUserSource = new BehaviorSubject<boolean>(false); // Default empty string
+  public messages = new BehaviorSubject<string[]>([]); // Default empty string
+  private userId = new BehaviorSubject<string>(''); // Default empty string
+  selectedUser$ = this.selectedUserSource.asObservable(); // Observable for the selected user
 
-setVisibility(visible:boolean){
-this.visibility=visible;
-}
+  // Method to change the selected user
+  setSelectedUser(user: boolean) {
+    this.selectedUserSource.next(user);
+  }
 
-getVisibility(){
-  return this.visibility;
-}
+  setMessages(message:any){
+  this.messages.next( message);
+  }
 
-  private apiUrl = environment.url+'user/';
-  // private apiUrl = 'https://kirachatapi-production.up.railway.app/user/';
+  getMessages(){
+    return this.messages;
+  }
+
+  setVisibility(visible: boolean,apiCall:boolean) {
+    this.visibility = visible;
+    this.hasCalledApi = apiCall;
+  }
+
+  getVisibility() {
+    return this.visibility;
+  }
+
+  getApiCalledValue(){
+    return this.hasCalledApi;
+  }
+
+  private apiUrl = environment.url + 'user/';
   constructor(private http: HttpClient) {}
 
-  users_list:[]=[];
+  users_list: [] = [];
 
   userSelected = new EventEmitter<UserData>();
 
-  setUser(users:any){
-   this.users_list=users;
+  setUser(users: any) {
+    this.users_list = users;
   }
 
-  getUsers(){
+  getUsers() {
     return this.users_list;
   }
 
@@ -64,9 +87,9 @@ getVisibility(){
     return this.http.get(this.apiUrl);
   }
 
-  sendToken(){
+  sendToken() {
     const token = localStorage.getItem('token');
-    if(!token){
+    if (!token) {
       throw new Error('Token not found');
     }
 
@@ -79,7 +102,7 @@ getVisibility(){
 
   getAllUser(): Observable<any> {
     let headers = this.sendToken();
-    return this.http.get(this.apiUrl+'all', { headers });
+    return this.http.get(this.apiUrl + 'all', { headers });
   }
 
   getImageSrc(image: { contentType: string; data: string }): string {
@@ -88,20 +111,38 @@ getVisibility(){
 
   fetchUserChat() {
     console.log('fetchUserChat method starts:');
-    
-    // Get the token and prepare the headers
+
     let headers = this.sendToken();
-    console.log(headers);
-    
-    // Get the otherUserId from localStorage
+
     let otherUserId: any = localStorage.getItem('userId') || undefined;
     otherUserId = JSON.parse(otherUserId);
-    console.log('other user id', otherUserId);
-    
-    // Append the otherUserId as a query parameter in the URL
-    const urlWithParams = `http://localhost:8080/user/chat/single/data?otherUserId=66d2f0cd36c06d02b72dcb0e`;
-    
-    // Make the GET request with headers
+    console.log(otherUserId);
+
+    const urlWithParams =
+      this.apiUrl + `chat/single/data?otherUserId=${otherUserId}`;
+
     return this.http.get(urlWithParams, { headers });
   }
+
+  setUserData(id:any){
+    this.userId.next(id)
+    this.getUserChat();
+  }
+
+  getUserChat() {
+    console.log('😎😎  fetch user Details method starts');
+    this.fetchUserChat().subscribe({
+      next: (res: any) => {
+        console.log(res.data.messages);
+        // this.messages = res.data.messages;
+        // console.log(this.messages);
+        this.setMessages(res.data.messages);
+      },
+      error: (res: any) => {
+        console.log(res);
+        this.setMessages([]);
+      },
+    });
+  }
+
 }

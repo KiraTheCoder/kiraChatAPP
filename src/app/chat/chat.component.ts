@@ -13,47 +13,61 @@ import { UserData } from '../interfaces/userDataInterface';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [MatIconModule, FormsModule, CommonModule, RouterOutlet,IconsComponent,UsersComponent],
+  imports: [
+    MatIconModule,
+    FormsModule,
+    CommonModule,
+    RouterOutlet,
+    IconsComponent,
+    UsersComponent,
+  ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })
-
 export class ChatComponent {
-  userDetails :UserData | undefined;
-  messages:Messages[]=[];
+  userDetails: UserData | undefined;
+  messages: Messages[] = [];
   message: any = '';
+  hasCalledApi: boolean = false;
+  visible: boolean = false;
 
-  constructor(private socketService: SocketService,private service:UserService) {}
- 
-  visible:boolean=false;
+  constructor(
+    private socketService: SocketService,
+    private service: UserService
+  ) {}
+  userId: any = '';
 
-  // user:any
-  
   ngOnInit(): void {
-    // Listen for new messages
-    this.visible=this.service.getVisibility();
+    this.visible = this.service.getVisibility();
+    this.hasCalledApi = this.service.getApiCalledValue();
     this.socketService.on('receiveMessage').subscribe((message: any) => {
-      // console.log(message)
-      this.messages.push(message)
-     
+      this.messages.push(message);
     });
 
-    this.service.userSelected.subscribe(data => {
+    this.service.userSelected.subscribe((data) => {
       this.userDetails = data;
-      // console.log('Received User Data:', this.userDetails);
     });
-
-    this.getUserChat()
-    
+    this.service.messages.subscribe((messages: any) => {
+      // console.log('Updated messages:', messages);
+      if(messages){
+        this.messages = messages
+      }else{
+        this.message=''
+      }
+    });
   }
-  
+
   // Send a message
   sendMessage(): void {
     this.socketService.emit('sendMessage', this.message);
-     let newMessage =this.message
-     let userId = localStorage.getItem('userId') || '';
-    this.messages.push({message:newMessage,userId:userId,createdAt:Date.now()})
-    console.log(this.message)
+    let newMessage = this.message;
+    let userId = localStorage.getItem('userId') || '';
+    this.messages.push({
+      message: newMessage,
+      userId: userId,
+      createdAt: Date.now(),
+    });
+    // console.log(this.message);
     this.message = '';
   }
 
@@ -62,108 +76,7 @@ export class ChatComponent {
   }
 
   imgSource(image: { contentType: string; data: string }): string {
-     let src = this.service.getImageSrc(image);
-     return src;
+    let src = this.service.getImageSrc(image);
+    return src;
   }
-
-  getUserChat(){
-    console.log('😎😎  fetch user Details method starts')
-    this.service.fetchUserChat().subscribe({
-      next:(res:any)=>{
-        console.log(res);
-      },
-      error:(res:any)=>{
-        console.log(res);
-      }
-    })
-  }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

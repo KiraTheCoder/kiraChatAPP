@@ -7,7 +7,6 @@
     <app-users (userSelected)="onUserSelected($event)"></app-users>
   </div>
 
-
   <div class="main-div" *ngIf="visible">
     <!-- Navbar section containing icons for phone and video -->
     <div class="navbar-div">
@@ -18,7 +17,7 @@
           <img *ngIf="userDetails.image;else defaultImage"
            [src]="imgSource(userDetails.image)" alt="">
 
-          <ng-template #defaultImage>
+          <ng-template class="img-div" #defaultImage>
             <div [ngClass]="'default-image'"></div>
           </ng-template>
         </div>
@@ -38,8 +37,9 @@
 
     <!-- Section displaying the chat messages -->
     
-  <div class="chat-display-section">
-    <div class="chat-container" *ngFor="let msg of messages" >
+  <div class="chat-display-section"
+   >
+    <div class="chat-container" *ngFor="let msg of messages"  >
       <p class="msg">{{msg.message}}</p>
       </div>
   </div>

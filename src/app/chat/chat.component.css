@@ -94,8 +94,11 @@ input:focus{
   height: 45px;
   width: 45px;
   border-radius: 5rem;
+  border: 1px solid red;
   background-color: lightblue;
   margin-left: 20px;
+  background-color: green;
+  margin-right: 20px;
 }
 
 .content {
@@ -148,4 +151,8 @@ p {
   background-position: center;
   height: 100%; /* Adjust as needed */
   width: 100%; /* Adjust as needed */
+}
+
+.img-div{
+
 }
